@@ -1,4 +1,8 @@
 import express from "express";
+import { connectDB } from "./config/database";
+
+connectDB();
+
 const app = express();
 
 app.get("/", (request, response, next) => {
