@@ -1,7 +1,10 @@
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
+import type { Staff } from "./staff/dto/staff.dto";
 
-type Data = any; // !!! PAMIETAC ZEBY ZMIENIC POZNIEJ !!!!!
+type Data = {
+    staff: Staff[]
+} // !!! PAMIETAC ZEBY ZMIENIC POZNIEJ !!!!!
 
 const dataPath = path.join(__dirname, "data.json");
 
