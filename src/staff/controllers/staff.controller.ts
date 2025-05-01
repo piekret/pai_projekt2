@@ -8,7 +8,6 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export const staffController = express.Router();
-let currId = 0;
 
 
 staffController.post('/register', validationMiddleware(CreateStaffDTO), async (req, res) => {
@@ -21,11 +20,15 @@ staffController.post('/register', validationMiddleware(CreateStaffDTO), async (r
         });
         return;
     }
+
+    const maxId = data.staff.length > 0 ? Math.max(...data.staff.map((m: Staff) => m.id)) : -1;
+    const newId = maxId + 1;
+
         
 
     const hashed = await bcrypt.hash(body.password, 10);
     const newMember = {
-        ...{ id: currId++ },
+        ...{ id: newId },
         ...body,
         ...{ password: hashed },
         ...{ joinDate: new Date().toISOString() },
@@ -78,7 +81,7 @@ staffController.post('/login', validationMiddleware(LoginStaffDTO), async (req, 
     res.status(StatusCodes.OK).send({ ...memberNoPass, token });
 })
 
-staffController.use(authMiddleware);
+staffController.use(authMiddleware());
 
 staffController.get('/me', async (req, res) => {
     const data = await readData();
@@ -128,5 +131,24 @@ staffController.delete('/me', async (req, res) => {
 
     data.staff.splice(i, 1);
     await writeData(data);
+    res.status(StatusCodes.NO_CONTENT).send();
+})
+
+staffController.delete('/fire/:id', authMiddleware(true), async (req, res) => {
+    const idToDelete = req.params.id;
+    const data = await readData();
+
+    const idx = data.staff.findIndex(
+      (m: Staff) => m.id.toString() === idToDelete
+    );
+
+    if (idx === -1) {
+      res.status(StatusCodes.NOT_FOUND).send();
+      return;
+    }
+
+    data.staff.splice(idx, 1);
+    await writeData(data);
+
     res.status(StatusCodes.NO_CONTENT).send();
 })

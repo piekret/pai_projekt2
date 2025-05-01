@@ -4,8 +4,6 @@ import { inmatesController } from "./inmates/controllers/inmates.controller";
 import { staffController } from "./staff/controllers/staff.controller";
 import bodyParser from "body-parser";
 
-connectDB();
-
 const app = express();
 
 app.use(bodyParser.json());
