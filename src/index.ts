@@ -3,12 +3,19 @@ import { connectDB } from "./config/database";
 import { inmatesController } from "./inmates/controllers/inmates.controller";
 import { staffController } from "./staff/controllers/staff.controller";
 import bodyParser from "body-parser";
+import swaggerUI from 'swagger-ui-express';
+import swaggerJSDoc from "swagger-jsdoc";
+import { swaggerOptions } from "./swaggerOptions";
 
 const app = express();
+
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
 app.use(bodyParser.json());
 app.use('/staff', staffController);
 app.use('/inmates', inmatesController);
+
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 app.get("/", (request, response, next) => {
 	console.log("Hello world");
