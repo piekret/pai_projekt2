@@ -17,9 +17,9 @@ app.use('/inmates', inmatesController);
 
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
-app.get("/", (request, response, next) => {
+app.get("/", (req, res) => {
 	console.log("Hello world");
-	response.send("Hello world");
+	res.send("Hello world");
 });
 
 app.listen(3000, () => {

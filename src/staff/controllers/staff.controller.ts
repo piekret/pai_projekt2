@@ -18,30 +18,31 @@ export const staffController = express.Router();
  * @swagger
  * /staff/register:
  *   post:
- *       summary: Register new staff member
- *       tags:
- *           - Staff
- *       requestBody:
- *           required: true
- *           content:
- *               application/json:
- *                   schema:
- *                       $ref: '#/components/schemas/CreateStaffDTO'
- *       responses:
- *           201:
- *               description: New staff member created
- *               content:
- *                   application/json:
- *                       schema:
- *                           type: object
- *           400:
- *               description: Bad request (validation error or staff member with email exists)
- *               content:
- *                   application/json:
- *                       schema:
- *                           type: object
- *           500:
- *               description: Internal server error
+ *     summary: Register a new staff member
+ *     tags:
+ *       - Staff
+ *     security: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateStaffDTO'
+ *     responses:
+ *       201:
+ *         description: New staff member created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *       400:
+ *         description: Bad request – validation error or email already exists
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *       500:
+ *         description: Internal server error
  */
 staffController.post(
   "/register",
@@ -89,6 +90,37 @@ staffController.post(
   }
 );
 
+
+/**
+ * @swagger
+ * /staff/login:
+ *   post:
+ *     summary: Log in a staff member
+ *     tags:
+ *       - Staff
+ *     security: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/LoginStaffDTO'
+ *     responses:
+ *       200:
+ *         description: Successful login, returns staff data and JWT
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *       400:
+ *         description: Invalid credentials
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *       500:
+ *         description: Internal server error
+ */
 staffController.post(
   "/login",
   validationMiddleware(LoginStaffDTO),
@@ -127,6 +159,73 @@ staffController.post(
 staffController.use(authMiddleware());
 
 
+/**
+ * @swagger
+ * /staff/me:
+ *   get:
+ *     summary: Get current staff profile
+ *     tags:
+ *       - Staff
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Profile data returned
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *       401:
+ *         description: Unauthorized – missing or invalid JWT
+ *       404:
+ *         description: Staff member not found
+ *       500:
+ *         description: Internal server error
+ *
+ *   put:
+ *     summary: Update current staff profile
+ *     tags:
+ *       - Staff
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateStaffDTO'
+ *     responses:
+ *       200:
+ *         description: Profile updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *       400:
+ *         description: Validation error
+ *       401:
+ *         description: Unauthorized – missing or invalid JWT
+ *       404:
+ *         description: Staff member not found
+ *       500:
+ *         description: Internal server error
+ *
+ *   delete:
+ *     summary: Delete own staff account
+ *     tags:
+ *       - Staff
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       204:
+ *         description: Account deleted successfully (no content)
+ *       401:
+ *         description: Unauthorized – missing or invalid JWT
+ *       404:
+ *         description: Staff member not found
+ *       500:
+ *         description: Internal server error
+ */
 staffController.get("/me", async (req, res) => {
   const data = await readData();
   const user = (req as any).user as Staff;
@@ -182,6 +281,34 @@ staffController.delete("/me", async (req, res) => {
   res.status(StatusCodes.NO_CONTENT).send();
 });
 
+
+/**
+ * @swagger
+ * /staff/fire/{id}:
+ *   delete:
+ *     summary: Fire (delete) a staff member by ID
+ *     description: Requires admin privileges.
+ *     tags:
+ *       - Staff
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID of the staff member to remove
+ *     responses:
+ *       204:
+ *         description: Staff member deleted successfully (no content)
+ *       401:
+ *         description: Unauthorized – missing or invalid JWT or not an admin
+ *       404:
+ *         description: Staff member not found
+ *       500:
+ *         description: Internal server error
+ */
 staffController.delete("/fire/:id", authMiddleware(true), async (req, res) => {
   const idToDelete = req.params.id;
   const data = await readData();
