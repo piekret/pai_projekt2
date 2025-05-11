@@ -1,0 +1,605 @@
+{
+	"info": {
+		"_postman_id": "95246dc8-9ea5-4a1a-b967-edadacc7d65a",
+		"name": "ProjektPAI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41574989",
+		"_collection_link": "https://projektpai-5468.postman.co/workspace/ProjektPAI-Workspace~0e3e6e9e-bb18-4d02-8f8d-b93cd16b2191/collection/41574989-95246dc8-9ea5-4a1a-b967-edadacc7d65a?action=share&source=collection_link&creator=41574989"
+	},
+	"item": [
+		{
+			"name": "Osoba 1 - Patryk Jurak",
+			"item": [
+				{
+					"name": "Register (rola nie admin)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Norbert Sigma\",\r\n  \"email\": \"sasda@wp.pl\",\r\n  \"password\": \"qwertyuiop\",\r\n  \"role\": \"guard\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/staff/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"staff",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register (rola admin)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Admin Admin\",\r\n  \"email\": \"Admin@admin.com\",\r\n  \"password\": \"1234567890\",\r\n  \"role\": \"admin\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/staff/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"staff",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"Admin@admin.com\",\r\n  \"password\": \"1234567890\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/staff/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"staff",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get /me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/staff/me",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"staff",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aktualizacja swoich danych",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzQ2NTI0NDg4LCJleHAiOjE3NDY2MTA4ODh9.ABvl6Pv5jU1yKThnMsg9VBW8Jv3BjrSxCn0ZrsDflPw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Admin Zmiana\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/staff/me",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"staff",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Zrezygnowanie z pracy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzQ2NTI0NDg4LCJleHAiOjE3NDY2MTA4ODh9.ABvl6Pv5jU1yKThnMsg9VBW8Jv3BjrSxCn0ZrsDflPw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/staff/me",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"staff",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Zwolnienie kogoś",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzQ2NTI0NDg4LCJleHAiOjE3NDY2MTA4ODh9.ABvl6Pv5jU1yKThnMsg9VBW8Jv3BjrSxCn0ZrsDflPw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/staff/fire/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"staff",
+								"fire",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Osoba 2 - Michał Żyszkiewicz",
+			"item": [
+				{
+					"name": "Dodawanie osadzonego",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Sztefan nigga\",\r\n  \"crime\": \"Robert\",\r\n  \"sentenceStart\": \"2025-01-01\",\r\n  \"sentenceEnd\": \"2026-01-01\",\r\n  \"visits\": []\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/inmates",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"inmates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lista osadzonych",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/inmates",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"inmates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Szczegóły osadzonego",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/inmates/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"inmates",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aktualizacja osadzonego",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"sentenceEnd\": \"2026-04-04\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/inmates/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"inmates",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuwanie osadzonego",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/inmates/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"inmates",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Osoba 3 - Tomasz Zając",
+			"item": [
+				{
+					"name": "Historia odwiedzin więźnia",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzQ2Nzc0Mjk5LCJleHAiOjE3NDY4NjA2OTl9.IJf_D4hWYKNTOKthWsfI1NJIhzl20Pt4OTo08ufmDFc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/inmates/:id/visits",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"inmates",
+								":id",
+								"visits"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Szczegóły wizyty",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzQ2NTUxNTIzLCJleHAiOjE3NDY2Mzc5MjN9.qOKj2qfxEzRf9qo5lekLBRS-N5rhSuccbimUC3ty4ew",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/inmates/:inmateId/visits/:visitId",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"inmates",
+								":inmateId",
+								"visits",
+								":visitId"
+							],
+							"variable": [
+								{
+									"key": "inmateId",
+									"value": "1"
+								},
+								{
+									"key": "visitId",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rejestracja odwiedzin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzQ2Nzc0Mjk5LCJleHAiOjE3NDY4NjA2OTl9.IJf_D4hWYKNTOKthWsfI1NJIhzl20Pt4OTo08ufmDFc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"visitorName\": \"Kamil kam\",\r\n    \"visitDate\": \"2025-04-04\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/inmates/:id/visits",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"inmates",
+								":id",
+								"visits"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modyfikacja wpisu",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzQ2NTUxNTIzLCJleHAiOjE3NDY2Mzc5MjN9.qOKj2qfxEzRf9qo5lekLBRS-N5rhSuccbimUC3ty4ew",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"visitorName\": \"Ślimak Kamil\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/inmates/:inmateId/visits/:visitId",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"inmates",
+								":inmateId",
+								"visits",
+								":visitId"
+							],
+							"variable": [
+								{
+									"key": "inmateId",
+									"value": "1"
+								},
+								{
+									"key": "visitId",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usunięcie rekordu odwiedzin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzQ2NTUxNTIzLCJleHAiOjE3NDY2Mzc5MjN9.qOKj2qfxEzRf9qo5lekLBRS-N5rhSuccbimUC3ty4ew",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/inmates/:inmateId/visits/:visitId",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"inmates",
+								":inmateId",
+								"visits",
+								":visitId"
+							],
+							"variable": [
+								{
+									"key": "inmateId",
+									"value": "1"
+								},
+								{
+									"key": "visitId",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Test Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
