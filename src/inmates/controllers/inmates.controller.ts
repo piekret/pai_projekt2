@@ -93,6 +93,39 @@ inmatesController.delete('/:id', async (req, res) => {
 
 inmatesController.use(authMiddleware(true));
 
+/**
+ * @swagger
+ * /inmates/{id}/visits:
+ *   get:
+ *     summary: Wszystkie wizyty więźnia
+ *     tags: [Inmates]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID więźnia
+ *     responses:
+ *       200:
+ *         description: Lista wizyt
+ *         content:
+ *           application/json:
+ *             example:
+ *               - id: 101
+ *                 visitDate: "2025-05-10"
+ *                 visitorName: "Anna Manna"
+ *       401:
+ *         description: Brak autoryzacji
+ *       404:
+ *         description: Nie znaleziono więźnia o podanym ID
+ *         content:
+ *           application/json:
+ *             example:
+ *               Nie znaleziono więźnia o podanym ID
+
+ */
+
 inmatesController.get('/:id/visits', async (req, res) => {
     const data = await readData();
     const inmateIndex = data.inmates.findIndex((i: Inmate) => i.id === Number.parseInt(req.params.id));
@@ -106,6 +139,49 @@ inmatesController.get('/:id/visits', async (req, res) => {
 
     res.status(StatusCodes.OK).send(visits);
 })
+
+/**
+ * @swagger
+ * /inmates/{id}/visits:
+ *   post:
+ *     summary: Dodaj wizytę do więźnia
+ *     tags: [Inmates]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID więźnia
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateVisitDTO'
+ *           example:
+ *              visitDate: "2025-05-11"
+ *              visitorName: "Kamil Ślimak"
+ *     responses:
+ *       201:
+ *         description: Wizyta dodana
+ *         content:
+ *           application/json:
+ *             example:
+ *               id: 102
+ *               visitDate: "2025-05-11"
+ *               visitorName: "Kamil Ślimak"
+ *       401:
+ *         description: Brak autoryzacji
+ *       404:
+ *         description: Nie znaleziono więźnia lub wizyty o podanym ID 
+ *         content:
+ *           application/json:
+ *             example:
+ *               Nie znaleziono więźnia o podanym ID
+
+ */
+
 
 inmatesController.post('/:id/visits', validationMiddleware(CreateVisitDTO), async (req, res) => {
     const data = await readData();
@@ -131,6 +207,43 @@ inmatesController.post('/:id/visits', validationMiddleware(CreateVisitDTO), asyn
     res.status(StatusCodes.CREATED).send(newVisit);
 });
 
+/**
+ * @swagger
+ * /inmates/{inmateId}/visits/{visitId}:
+ *   get:
+ *     summary: Wyświetl specyficzną wizytę więźnia
+ *     tags: [Inmates]
+ *     parameters:
+ *       - in: path
+ *         name: inmateId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *       - in: path
+ *         name: visitId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Wizyta znaleziona
+ *         content:
+ *           application/json:
+ *             example:
+ *               id: 103
+ *               visitDate: "2025-05-12"
+ *               visitorName: "Piotr Pidżama"
+ *       401:
+ *         description: Brak autoryzacji
+ *       404:
+ *         description: Nie znaleziono więźnia lub wizyty o podanym ID
+ *         content:
+ *           application/json:
+ *             example:
+ *               Nie znaleziono więźnia o podanym ID
+
+ */
+
 inmatesController.get('/:inmateId/visits/:visitId', async (req, res) => {
     const data = await readData();
     
@@ -153,8 +266,55 @@ inmatesController.get('/:inmateId/visits/:visitId', async (req, res) => {
         return;
     }
 
-    res.status(StatusCodes.OK).send(visit);
+    res.
+    status(StatusCodes.OK).send(visit);
 });
+
+/**
+ * @swagger
+ * /inmates/{inmateId}/visits/{visitId}:
+ *   put:
+ *     summary: Zaaktualizuj wizytę więźnia
+ *     tags: [Inmates]
+ *     parameters:
+ *       - in: path
+ *         name: inmateId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *       - in: path
+ *         name: visitId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateVisitDTO'
+ *           example:
+ *             date: "2025-05-13"
+ *             visitorName: "John Doe"
+ *     responses:
+ *       200:
+ *         description: Wizyta zaktualizowana
+ *         content:
+ *           application/json:
+ *             example:
+ *               id: 103
+ *               date: "2025-05-13"
+ *               visitorName: "John Doe"
+ *       401:
+ *         description: Brak autoryzacji
+ *       404:
+ *         description: Nie znaleziono więźnia lub wizyty o podanym ID
+ *         content:
+ *           application/json:
+ *             example:
+ *               Nie znaleziono więźnia o podanym ID
+
+ */
 
 inmatesController.put('/:inmateId/visits/:visitId', validationMiddleware(UpdateVisitDTO), async (req, res) => {
     const data = await readData();
@@ -202,6 +362,40 @@ inmatesController.put('/:inmateId/visits/:visitId', validationMiddleware(UpdateV
     res.status(StatusCodes.OK).send(updatedVisit);
 });
 
+/**
+ * @swagger
+ * /inmates/{inmateId}/visits/{visitId}:
+ *   delete:
+ *     summary: Usuń wizytę więźnia
+ *     tags: [Inmates]
+ *     parameters:
+ *       - in: path
+ *         name: inmateId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *       - in: path
+ *         name: visitId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       204:
+ *         description: Wizyta usunięta
+ *         content:
+ *           application/json:
+ *             example:
+ *               Usunięto wizytę
+ *       401:
+ *         description: Brak autoryzacji
+ *       404:
+ *         description: Nie znaleziono więźnia lub wizyty o podanym ID
+ *         content:
+ *           application/json:
+ *             example:
+ *               Nie znaleziono więźnia o podanym ID
+ */
+
 inmatesController.delete('/:inmateId/visits/:visitId', async (req, res) => {
     const data = await readData();
     const inmateIndex = data.inmates.findIndex((i: Inmate) => i.id === parseInt(req.params.inmateId));
@@ -221,5 +415,5 @@ inmatesController.delete('/:inmateId/visits/:visitId', async (req, res) => {
     data.inmates[inmateIndex].visits.splice(visitIndex, 1);
     await writeData(data);
 
-    res.status(StatusCodes.NO_CONTENT).send();
+    res.status(StatusCodes.NO_CONTENT).send("Usunięto wizytę");
 });

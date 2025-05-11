@@ -3,7 +3,7 @@ export const swaggerOptions = {
     openapi: "3.0.0",
     info: {
       title: "Projekt 2 Swagger",
-      version: "1.0.0",
+      version: "Iamcominglouis",
       description: "🥀🥀🥀",
     },
     servers: [
@@ -20,6 +20,37 @@ export const swaggerOptions = {
         },
       },
       schemas: {
+        CreateVisitDTO: {
+          type: "object",
+          properties: {
+            visitorName: {
+              type: "string",
+              minLength: 2,
+              example: "Jan Wieprzowina",
+            },
+            visitDate: {
+              type: "string",
+              format: "date",
+              example: "2025-05-11",
+            },
+          },
+          required: ["visitorName", "visitDate"],
+        },
+        UpdateVisitDTO: {
+          type: "object",
+          properties: {
+            visitorName: {
+              type: "string",
+              minLength: 2,
+              example: "Jan Wieprzowina",
+            },
+            visitDate: {
+              type: "string",
+              format: "date",
+              example: "2025-05-11",
+            },
+          },
+        },
         CreateStaffDTO: {
           type: "object",
           properties: {
@@ -95,5 +126,8 @@ export const swaggerOptions = {
       },
     ],
   },
-  apis: ["src/staff/controllers/*.ts"],
+  apis: [
+    "src/staff/controllers/*.ts",
+    "src/inmates/controllers/*.ts"
+  ],
 };
